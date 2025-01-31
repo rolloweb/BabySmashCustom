@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Baby Smash Custom</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #99d2ed;
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+            position: relative;
+            touch-action: none;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
+            transition: background-color 1s;
+        }
+
+        #celestial {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            background: #ffdb67;
+            border-radius: 50%;
+            top: 50px;
+            left: 0;
+            box-shadow: 0 0 50px #ffdb67;
+            transition: all 0.5s;
+            z-index: 1;
+        }
+
+        .effect {
+            position: absolute;
+            pointer-events: none;
+            animation: bounce 0.8s ease-out forwards;
+            width: 100px;
+            height: 100px;
+            transform-origin: center;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.2));
+            z-index: 2;
+        }
+
+        @keyframes bounce {
+            0% {
+                transform: scale(0.2) rotate(-10deg);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1.2) rotate(10deg);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1) rotate(0deg);
+                opacity: 0;
+            }
+        }
+
+        #menu-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: rgba(255,255,255,0.8);
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-family: Arial;
+            font-size: 14px;
+        }
+
+        #fullscreen-btn {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            background: rgba(255,255,255,0.8);
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-family: Arial;
+            font-size: 14px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <button id="menu-button">⚙️ Settings</button>
+    <button id="fullscreen-btn">📱 Tap for Fullscreen</button>
+    <div id="celestial"></div>
+
+    <script>
+        // Load settings from localStorage
+        const settings = JSON.parse(localStorage.getItem('babySmashSettings')) || {
+            sounds: {
+                music: true,
+                animals: true,
+                custom: false
+            },
+            visuals: 'kawaii',
+            background: 'daynight'
+        };
+
+        // Visual effects based on settings
+        const visualEffects = {
+            kawaii: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="50" cy="50" r="45" fill="currentColor"/>
+                        <circle cx="35" cy="40" r="5" fill="#333"/>
+                        <circle cx="65" cy="40" r="5" fill="#333"/>
+                        <path d="M40 60 Q50 68 60 60" stroke="#333" fill="none" stroke-width="3"/>
+                    </svg>`,
+            emoji: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="50" cy="50" r="45" fill="currentColor"/>
+                        <circle cx="35" cy="35" r="8" fill="#333"/>
+                        <circle cx="65" cy="35" r="8" fill="#333"/>
+                        <path d="M30 65 Q50 80 70 65" stroke="#333" fill="none" stroke-width="4"/>
+                    </svg>`
+        };
