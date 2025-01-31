@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baby Smash Custom</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #99d2ed, #ffb8bc);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .config-container {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            max-width: 600px;
+            width: 90%;
+            margin: 20px;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .setting-group {
+            margin-bottom: 25px;
+            padding: 15px;
+            border: 1px solid #eee;
+            border-radius: 10px;
+        }
+
+        h3 {
+            color: #666;
+            margin-top: 0;
+        }
+
+        label {
+            display: block;
+            margin: 10px 0;
+            cursor: pointer;
+        }
+
+        input[type="radio"],
+        input[type="checkbox"] {
+            margin-right: 10px;
+        }
+
+        button {
+            background: #4ECDC4;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s;
+            width: 100%;
+        }
+
+        button:hover {
+            background: #45b8b0;
+        }
+
+        .preview {
+            width: 100%;
+            height: 200px;
+            border: 2px dashed #ccc;
+            border-radius: 10px;
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="config-container">
+        <h1>Customize Your Baby Smash</h1>
+
+        <div class="setting-group">
+            <h3>Sound Effects</h3>
+            <label><input type="checkbox" id="enable-music" checked> Musical Notes</label>
+            <label><input type="checkbox" id="enable-animals" checked> Animal Sounds</label>
+            <label><input type="checkbox" id="enable-custom"> Custom Sounds</label>
+            <div id="custom-sounds" style="display: none;">
+                <p>Coming soon: Upload custom sounds!</p>
+            </div>
+        </div>
+
+        <div class="setting-group">
+            <h3>Visual Effects</h3>
+            <label><input type="radio" name="faces" value="kawaii" checked> Kawaii Faces</label>
+            <label><input type="radio" name="faces" value="emoji"> Emoji Style</label>
+            <label><input type="radio" name="faces" value="custom"> Custom Images</label>
+            <div class="preview">
+                Preview of selected style will appear here
+            </div>
+        </div>
+
+        <div class="setting-group">
+            <h3>Background</h3>
+            <label><input type="radio" name="bg" value="daynight" checked> Day/Night Cycle</label>
+            <label><input type="radio" name="bg" value="rainbow"> Rainbow Cycle</label>
+            <label><input type="radio" name="bg" value="custom"> Custom Colors</label>
+            <div class="preview">
+                Background preview will appear here
+            </div>
+        </div>
+
+        <button id="start-game">Start Baby Smash!</button>
+    </div>
+
+    <script>
+        // Handle custom sounds toggle
+        document.getElementById('enable-custom').addEventListener('change', function() {
+            document.getElementById('custom-sounds').style.display = 
+                this.checked ? 'block' : 'none';
+        });
+
+        // Save settings and start game
+        document.getElementById('start-game').addEventListener('click', function() {
+            const settings = {
+                sounds: {
+                    music: document.getElementById('enable-music').checked,
+                    animals: document.getElementById('enable-animals').checked,
+                    custom: document.getElementById('enable-custom').checked
+                },
+                visuals: document.querySelector('input[name="faces"]:checked').value,
+                background: document.querySelector('input[name="bg"]:checked').value
+            };
+
+            // Save settings to localStorage
+            localStorage.setItem('babySmashSettings', JSON.stringify(settings));
+
+            // Redirect to game
+            window.location.href = 'game.html';
+        });
+    </script>
+</body>
+</html>
